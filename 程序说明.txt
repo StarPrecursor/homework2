@@ -1,22 +1,28 @@
-1~100000000����������
+1~100000000素数产生器
 
-ʹ��Code::Blocks���� 
-������˵����"Have g++ follow the C++11 ISO C++ language standard [-std=c++11]"
+使用Code::Blocks开发 
+编译器说明："Have g++ follow the C++11 ISO C++ language standard [-std=c++11]"
 
-�㷨˵��
+算法说明
 
-    1.���뼰���飺 int InputNumber(int &)
-        1��ͨ��gets���һ���ַ����룻
-        2������һ���ַ��Ƿ�Ϊ��+�������Ǽ����һ���ַ��������ǣ����������ַ���
-        3����������ַ������ܡ�0����ͷ�����룬������¼��ֱ����鵽����Ϸ����룻
-        4������¼����Ч�ַ�ת��Ϊint�����ݷ��ء�
+    1.输入及检验： int InputNumber(int &)
+        1）通过gets获得一行字符输入；
+        2）检查第一个字符是否为“+”，若是检查下一个字符，若不是，继续检查该字符；
+        3）继续检查字符，接受“0”开头的输入，但不记录，直至检查到非零合法输入；
+        4）将记录的有效字符转化为int型数据返回。
 
-    2.Ԥ������ int IsPrime(void) | int PrimeSeperate(void)
-        1������һ��bool��������prime[]��ʼ��Ϊtrue��
-           ɸѡʱ�����ж�Ϊ��������Ϊfalse��
-           ��������i��Ӧ��2i+3����ǰ�ų�ż������
-        2��ʹ�ú���IsPrime()����ɸѡ����ÿ������ɸѡ��������
-           ɸ���ѡȡ֮���һ��ֵΪtrue������Ϊ�µ���������ɸѡ��
-        3��ʹ�ú���PrimeSeperate()��10000������Ϊ��λ���з������ӿ�֮�������Ĳ��ң�
-    3.���������int Primenum(int)
-        �����������ţ��ж������ڷ�����0~10000����Ȼ������Ӧ�����������β��ҡ�
+    2.预处理： int IsPrime(void) | int PrimeSeperate(void)
+        1）定义一个bool类型数组prime[]初始化为true，
+           筛选时，若判定为合数则置为false，
+           数组的序号i对应数2i+3（提前排除偶数）；
+        2）使用函数IsPrime()进行筛选，用每个素数筛选其后的数，
+           筛完后，选取之后第一个值为true的数作为新的素数继续筛选；
+        3）使用函数PrimeSeperate()以10000个素数为单位进行分区，加快之后素数的查找；
+    3.查找输出：int Primenum(int)
+        根据输入的序号，判断其所在分区（0~10000），然后在相应分区进行依次查找。
+        
+小结
+
+    ·预处理是主要花费时间的地方，但一旦预处理完成，后续查找素数时间可以忽略不计。
+    ·对于预处理可以做如下简化，提前生成记录素数的二进制文档（1表示素数，0表示合数）
+用的时候直接查找就好了，感觉这种做法非常实用，但是不需要多少编程，所以姑且这里没这么做。
